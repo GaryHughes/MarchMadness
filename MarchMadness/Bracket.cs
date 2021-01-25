@@ -43,12 +43,28 @@ namespace MarchMadness
             var round = new Round(RoundNumber + 1);
 
             var remainingTeams = ListRemainingTeams();
+            if (remainingTeams.Count() % 2 != 0)
+            {
+                throw new Exception($"Unable to create a round with {remainingTeams.Count()} teams");
+            }
+
             var teamsByRegion = remainingTeams.GroupBy(team => team.Region);
             if (IsPlayoffRound(teamsByRegion))
             {
+                var regionSize = teamsByRegion.First().Count();
+                if (regionSize % 2 != 0)
+                {
+                    throw new Exception($"Unable to create a round with a region of {regionSize} teams");
+                }
+
                 // Playoff round, teams play only within their region.
                 foreach (var teams in teamsByRegion)
                 {
+                    if (teams.Count() != regionSize)
+                    {
+                        throw new Exception($"Unable to create a round because region {teams.Key} has {teams.Count()} instead of {regionSize} teams");
+                    }
+
                     CreateGames(round, teams.OrderBy(team => team.Seed));
                 }
             }

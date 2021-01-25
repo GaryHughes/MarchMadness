@@ -312,8 +312,44 @@ namespace MarchMadness.Tests
             Assert.AreEqual("UCLA", games[2].Loser?.Name);
         }
 
-        // TODO: Uneven number of teams.
-        // TODO: Different number of teams in different regions.
+        [TestMethod]
+        public void TestUnevenTeams()
+        {
+            var bracket = new Bracket();
+            bracket.AddTeam("UCLA", 1, "North");
+            bracket.AddTeam("USC", 2, "North");
+            bracket.AddTeam("California", 3, "West");
+            bracket.AddTeam("UNLV", 4, "West");
+            bracket.AddTeam("Missouri", 5, "West");
+
+            Assert.ThrowsException<Exception>(() => bracket.CreateNextRound());
+        }
+
+        [TestMethod]
+        public void TestUnevenTeamsPerRegion()
+        {
+            var bracket = new Bracket();
+            bracket.AddTeam("UCLA", 1, "North");
+            bracket.AddTeam("USC", 2, "South");
+            bracket.AddTeam("California", 3, "West");
+
+            Assert.ThrowsException<Exception>(() => bracket.CreateNextRound());
+        }
+
+        [TestMethod]
+        public void TestMismatchedRegions()
+        {
+            var bracket = new Bracket();
+            bracket.AddTeam("UCLA", 1, "North");
+            bracket.AddTeam("USC", 2, "North");
+            bracket.AddTeam("California", 3, "West");
+            bracket.AddTeam("UNLV", 4, "West");
+            bracket.AddTeam("Missouri", 5, "West");
+            bracket.AddTeam("Florida", 6, "West");
+
+            Assert.ThrowsException<Exception>(() => bracket.CreateNextRound());
+        }
+
         // TODO: Creating the next round before the previous round is complete.
 
         private const string TestFileName = "TestTeams.csv";
