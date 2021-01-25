@@ -87,6 +87,26 @@ namespace MarchMadness.Tests
         }
 
         [TestMethod]
+        public void TestLoadTeamsInvalidFilename()
+        {
+            var bracket = new Bracket();
+            Assert.ThrowsException<FileNotFoundException>(() => bracket.LoadTeams("invalid.csv"));
+        }
+
+        [TestMethod]
+        public void TestLoadTeamsInvalidFileContent()
+        {
+            File.WriteAllText(TestFileName,
+            "Name,Seed,Region\n" +
+            "UCLA\n" +
+            "USC,2,South\n" +
+            "California,3,North\n");
+
+            var bracket = new Bracket();
+            Assert.ThrowsException<Exception>(() => bracket.LoadTeams(TestFileName));
+        }
+
+        [TestMethod]
         public void TestRound1()
         {
             var bracket = new Bracket();

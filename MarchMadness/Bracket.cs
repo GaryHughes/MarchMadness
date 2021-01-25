@@ -19,6 +19,12 @@ namespace MarchMadness
             foreach (var line in lines.Skip(1))
             {
                 var fields = line.Split(",");
+                
+                if (fields.Length != 3)
+                {
+                    throw new Exception($"Unexpected file content '{line}'");
+                }
+
                 var name = fields[0];
                 var seed = Int32.Parse(fields[1]);
                 var region = fields[2];
