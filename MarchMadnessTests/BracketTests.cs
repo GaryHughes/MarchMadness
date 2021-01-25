@@ -350,7 +350,21 @@ namespace MarchMadness.Tests
             Assert.ThrowsException<Exception>(() => bracket.CreateNextRound());
         }
 
-        // TODO: Creating the next round before the previous round is complete.
+        [TestMethod]
+        public void TestCreateNextRoundBeforeComplete()
+        {
+            var bracket = new Bracket();
+            bracket.AddTeam("UCLA", 1, "North");
+            bracket.AddTeam("USC", 2, "North");
+            bracket.AddTeam("California", 3, "West");
+            bracket.AddTeam("UNLV", 4, "West");
+
+            bracket.CreateNextRound();
+            bracket.Rounds[0].Games[0].Resolve(bracket.Teams["USC"]);
+            // California vs UNLV is still unresolved.
+
+            Assert.ThrowsException<Exception>(() => bracket.CreateNextRound());
+        }
 
         private const string TestFileName = "TestTeams.csv";
     }
