@@ -13,6 +13,7 @@ namespace MarchMadness
         public void Resolve(Team winner)
         {
             Winner = winner;
+            Loser = (winner == HomeTeam) ? AwayTeam : HomeTeam;
         }
 
         public override string ToString()
@@ -31,6 +32,7 @@ namespace MarchMadness
         public Team HomeTeam { get; }
         public Team AwayTeam { get; }
         public Team? Winner { get; private set; }
+        public Team? Loser { get; private set; }
 
         public bool IsComplete => (Winner != null);
     }

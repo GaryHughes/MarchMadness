@@ -16,6 +16,7 @@ namespace MarchMadness.Tests
             Assert.AreEqual("UCLA", game.HomeTeam.Name);
             Assert.AreEqual("Boston", game.AwayTeam.Name);
             Assert.AreEqual(null, game.Winner);
+            Assert.AreEqual(null, game.Loser);
             Assert.AreEqual(false, game.IsComplete);
         }
 
@@ -31,8 +32,8 @@ namespace MarchMadness.Tests
             Assert.AreEqual(1, game.RoundNumber, 1);
             Assert.AreEqual("UCLA", game.HomeTeam.Name);
             Assert.AreEqual("Boston", game.AwayTeam.Name);
-            Assert.IsNotNull(game.Winner);
             Assert.AreEqual("UCLA", game.Winner?.Name);
+            Assert.AreEqual("Boston", game.Loser?.Name);
             Assert.AreEqual(true, game.IsComplete);
         }
 
