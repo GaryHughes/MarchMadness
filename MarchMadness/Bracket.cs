@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace MarchMadness
@@ -10,6 +11,21 @@ namespace MarchMadness
         {
             Teams = new Dictionary<string, Team>();
             Rounds = new List<Round>();
+        }
+
+        public void LoadTeams(string filename)
+        {
+            var lines = File.ReadAllLines(filename);
+            foreach (var line in lines.Skip(1))
+            {
+
+                var fields = line.Split(",");
+                var name = fields[0];
+                var seed = Int32.Parse(fields[1]);
+                var region = fields[2];
+
+                AddTeam(name, seed, region);
+            }
         }
 
         public void AddTeam(string name, int seed, string region)

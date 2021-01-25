@@ -1,6 +1,6 @@
-using MarchMadness;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace MarchMadness.Tests
@@ -8,6 +8,24 @@ namespace MarchMadness.Tests
     [TestClass]
     public class BracketTests
     {
+        [TestInitialize]
+        public void Inititalize()
+        {
+            if (File.Exists(TestFileName))
+            {
+                File.Delete(TestFileName);
+            }
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            if (File.Exists(TestFileName))
+            {
+                File.Delete(TestFileName);
+            }
+        }
+
         [TestMethod]
         public void TestInitialState()
         {
@@ -34,6 +52,38 @@ namespace MarchMadness.Tests
             Assert.AreEqual("UCLA", team.Name);
             Assert.AreEqual(23, team.Seed);
             Assert.AreEqual("West", team.Region);
+        }
+
+        [TestMethod]
+        public void TestLoadTeams()
+        {
+            File.WriteAllText(TestFileName,
+            "Name,Seed,Region\n" +
+            "UCLA,1,West\n" +
+            "USC,2,South\n" +
+            "California,3,North\n");
+
+            var bracket = new Bracket();
+            bracket.LoadTeams(TestFileName);
+
+            Assert.AreEqual(0, bracket.RoundNumber);
+            Assert.AreEqual(3, bracket.Teams.Count);
+            Assert.AreEqual(0, bracket.Rounds.Count);
+            Assert.AreEqual(false, bracket.IsComplete());
+
+            var teams = bracket.AllTeams.OrderBy(team => team.Seed).ToList();
+
+            Assert.AreEqual("UCLA", teams[0].Name);
+            Assert.AreEqual(1, teams[0].Seed);
+            Assert.AreEqual("West", teams[0].Region);
+
+            Assert.AreEqual("USC", teams[1].Name);
+            Assert.AreEqual(2, teams[1].Seed);
+            Assert.AreEqual("South", teams[1].Region);
+
+            Assert.AreEqual("California", teams[2].Name);
+            Assert.AreEqual(3, teams[2].Seed);
+            Assert.AreEqual("North", teams[2].Region);
         }
 
         [TestMethod]
@@ -245,5 +295,7 @@ namespace MarchMadness.Tests
         // TODO: Uneven number of teams.
         // TODO: Different number of teams in different regions.
         // TODO: Creating the next round before the previous round is complete.
+
+        private const string TestFileName = "TestTeams.csv";
     }
 }
