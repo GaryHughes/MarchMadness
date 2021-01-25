@@ -18,7 +18,6 @@ namespace MarchMadness
             var lines = File.ReadAllLines(filename);
             foreach (var line in lines.Skip(1))
             {
-
                 var fields = line.Split(",");
                 var name = fields[0];
                 var seed = Int32.Parse(fields[1]);
