@@ -20,8 +20,8 @@ namespace MarchMadness
                 var lastRound = bracket.LastRound ?? throw new Exception("No last round defined.");
                 foreach (var game in bracket.LastRound.Games)
                 {
-                    game.Resolve(ChooseAtRandom(game.HomeTeam, game.AwayTeam));
-                    Console.WriteLine(game.ToString());
+                    game.Resolve(ChooseWinner(game));
+                    Console.WriteLine($"\t({game.Winner?.Name})");
                 }
 
                 Console.WriteLine();
@@ -34,7 +34,27 @@ namespace MarchMadness
             Console.WriteLine("Path to Victory: ");
             foreach (var game in bracket.ListGames(champion))
             {
-                Console.WriteLine($"    Defeated {game.Loser?.Name}");
+                Console.WriteLine($"  Round {game.RoundNumber}: defeated {game.Loser?.Name}");
+            }
+        }
+
+        public static Team ChooseWinner(Game game)
+        {
+            Console.Write($"  {game,-40} (H)ome, (A)way, (R)andom? ");
+            var key = Console.ReadKey();
+
+            switch (key.KeyChar)
+            {
+                case 'H':
+                case 'h':
+                    return game.HomeTeam;
+
+                case 'A':
+                case 'a':
+                    return game.AwayTeam;
+
+                default:
+                    return ChooseAtRandom(game.HomeTeam, game.AwayTeam);
             }
         }
 
