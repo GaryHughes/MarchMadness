@@ -2,7 +2,7 @@ using System;
 
 namespace MarchMadness
 {
-    public class Team
+    public record Team
     {
         public Team(string name, int seed, string region)
         {
