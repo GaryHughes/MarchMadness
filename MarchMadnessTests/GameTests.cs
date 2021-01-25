@@ -35,5 +35,25 @@ namespace MarchMadness.Tests
             Assert.AreEqual("UCLA", game.Winner?.Name);
             Assert.AreEqual(true, game.IsComplete);
         }
+
+        [TestMethod]
+        public void TestToString()
+        {
+            var team1 = new Team("UCLA", 23, "West");
+            var team2 = new Team("Boston", 5, "North");
+            var game = new Game(1, team1, team2);
+
+            var unresolved = game.ToString();
+
+            game.Resolve(team1);
+            var homeWon = game.ToString();
+
+            game.Resolve(team2);
+            var awayWon = game.ToString();
+
+            Assert.AreEqual("UCLA vs Boston", unresolved);
+            Assert.AreEqual("UCLA vs Boston (UCLA)", homeWon);
+            Assert.AreEqual("UCLA vs Boston (Boston)", awayWon);
+        }
     }
 }

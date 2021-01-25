@@ -15,6 +15,18 @@ namespace MarchMadness
             Winner = winner;
         }
 
+        public override string ToString()
+        {
+            var description = $"{HomeTeam.Name} vs {AwayTeam.Name}";
+
+            if (IsComplete)
+            {
+                description += $" ({Winner?.Name})";
+            }
+
+            return description;
+        }
+
         public int RoundNumber { get; }
         public Team HomeTeam { get; }
         public Team AwayTeam { get; }
