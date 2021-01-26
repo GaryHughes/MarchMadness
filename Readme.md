@@ -2,21 +2,21 @@
 
 This program simulates selection of a March Madness basketball bracket as described at https://en.wikipedia.org/wiki/March_Madness_pools.
 
-    - The program loads the teams from a csv file (supplied).
-    - As it runs, the user can press H, A or R to select the winner of each game (Home, Away or Random).
-    - The program concludes by reporting the champion team and their path to victory.
+  - The program loads the teams from a csv file (supplied).
+  - As it runs, the user can press H, A or R to select the winner of each game (Home, Away or Random).
+  - The program concludes by reporting the champion team and their path to victory.
 
 ## Instructions
 
 This project has been written using .NET 5.0 and C# 9.
-    1. Build with the command `dotnet build`
-    2. Run tests with the command `dotnet test`
-    3. Run the program with the command `dotnet run --project MarchMadness [teams file]`
+  1. Build with the command `dotnet build`
+  2. Run tests with the command `dotnet test`
+  3. Run the program with the command `dotnet run --project MarchMadness [teams file]`
 
 ## Notes
 
-    - The code does not require 16 teams in 4 regions as per the competition, but there must be an even number of teams and the same number of teams per region.
-    - The supplied teams have randomly assigned regions and seeds, which may make the output appear unrealistic.
+  - The code does not require 16 teams in 4 regions as per the competition, but there must be an even number of teams and the same number of teams per region.
+  - The supplied teams have randomly assigned regions and seeds, which may make the output appear unrealistic.
 
 ## Example Output
 ```
